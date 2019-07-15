@@ -10,6 +10,11 @@
  * RESP (success and error, mention how resp.success and resp.error behave differently in Stream Services)
  */
 
+/** 
+ * Just for reference here, shouldn't be part of the template
+ * Description: Allows for infinite execution of logic, parallelly.
+ */
+
 function StreamServiceName(req, resp) {
   ClearBlade.init({ request: req });
   var messaging = ClearBlade.Messaging();
