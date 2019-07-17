@@ -17,5 +17,7 @@
  */
 
 function ServiceName(req,resp){
+    // These are parameters passed into the code service
+    var params = req.params
     resp.success("Success");
 }
