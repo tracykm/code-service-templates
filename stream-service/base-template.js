@@ -19,35 +19,34 @@ function StreamServiceName(req, resp) {
   ClearBlade.init({ request: req });
   var messaging = ClearBlade.Messaging();
   const TOPIC = "hello";
-  messaging.subscribe(TOPIC, function(err, data) {
+  messaging.subscribe(TOPIC, WaitLoop);
+
+  function WaitLoop(err, data) {
+
     if (err) {
       // DEBUG MESSAGE
       messaging.publish("error", "Subscribe failed: " + data);
       resp.error(data);
     }
     // DEBUG MESSAGE
-    messaging.publish("success", "Subscribed to Shared Topic");
-    // Once successfully subscribed
-    WaitLoop();
-  });
+    messaging.publish("success", "Subscribed to Shared Topic. Starting Loop.");
 
-  function WaitLoop() {
-    // DEBUG MESSAGE
-    messaging.publish("success", "Starting the Loop");
     while (true) {
       messaging.waitForMessage([TOPIC], function(err, msg, topic) {
         if (err) {
           // DEBUG MESSAGE
           messaging.publish("error", "Failed to wait for message: " + err + " " + msg + "  " + topic);
           resp.error("Failed to wait for message: " + err + " " + msg + "    " + topic);
-        } else {
-          handler(msg, topic);
-        }
+        } 
+        processMessage(msg, topic);
       });
     }
   }
 
-  function handler(msg, topic) {
-    // Perform Some Action...like storing it in a collection, or process and publish to another topic
+  function processMessage(msg, topic) {
+    // Examples of process message tasks:
+    // - Storing message in a collection: https://github.com/ClearBlade/native-libraries/blob/master/clearblade.md#collectioncreatenewitem-callback
+    // - Process and publish to another topic: https://github.com/ClearBlade/native-libraries/blob/master/clearblade.md#messagepublishtopic-payload
+    // - Update a Device State: https://github.com/ClearBlade/native-libraries/blob/master/clearblade.md#deviceupdatequery-changes-callback
   }
 }
