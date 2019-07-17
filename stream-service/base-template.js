@@ -44,6 +44,8 @@ function StreamServiceName(req, resp) {
   }
 
   function processMessage(msg, topic) {
+    // DEBUG MESSAGE
+    messaging.publish("processedmessage", "Received message " +msg+ " "+ topic);
     // Examples of process message tasks:
     // - Storing message in a collection: https://github.com/ClearBlade/native-libraries/blob/master/clearblade.md#collectioncreatenewitem-callback
     // - Process and publish to another topic: https://github.com/ClearBlade/native-libraries/blob/master/clearblade.md#messagepublishtopic-payload
